@@ -14,7 +14,7 @@ class YMInitializer extends Component {
         let attrs = this.props.attrs;
         el.type = 'text/javascript';
         el.async = true;
-        el.src = scriptPath(this.props.version);
+        el.src = typeof this.props.scriptPath === 'string' ? this.props.scriptPath : this.props.scriptPath(this.props.version);
         Object.keys(attrs).map(i => {
             if (el.__proto__.hasOwnProperty(i)) {
                 el.setAttribute(i, attrs[i]);
@@ -43,14 +43,16 @@ YMInitializer.propTypes = {
     containerElement: PropTypes.string,
     options: PropTypes.object,
     attrs: PropTypes.object,
-    version: PropTypes.oneOf(['1', '2'])
+    version: PropTypes.oneOf(['1', '2']),
+    scriptPath: PropTypes.string
 };
 
 YMInitializer.defaultProps = {
     containerElement: 'div',
     options: {},
     attrs: {},
-    version: '1'
+    version: '1',
+    scriptPath: scriptPath
 };
 
 export { YMInitializer };
